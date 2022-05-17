@@ -1,0 +1,82 @@
+.footer {
+    background-color: #8C2703;
+    height: 260px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-social .footer-social-links {
+   margin-right: 60px;
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer-info .footer-info-contato {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+
+.footer-info a:link, a:visited {
+    color: #000000;
+    font-weight: bold;
+    margin-top: 6px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.footer-info .footer-info-duvidas {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    margin-left: 60px;
+}
+
+.footer-info .footer-info-newsletter {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    margin-left: 60px;
+}
+
+.footer-info .footer-info-newsletter label{
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 6px;
+    width: 220px;
+}
+
+.footer-info .footer-info-newsletter input {
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 6px;
+    padding-left: 40px;
+    border: 0;
+    border-radius: 4%;
+    text-shadow: white 0px 0px 2px;
+    background-size: 20px;
+}
+
