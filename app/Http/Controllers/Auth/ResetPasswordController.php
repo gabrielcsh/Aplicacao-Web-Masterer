@@ -3,8 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
 use App\Providers\RouteServiceProvider;
+use App\Repositories\UserRepository;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+
 
 class ResetPasswordController extends Controller
 {
@@ -27,4 +33,26 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    public function resetPassword()
+    {
+        $email_address = $_REQUEST['email'];
+        $this->sendEmail($email_address);
+    }
+
+    public function sendEmail($email_address)
+    {
+        $user = UserRepository::findByEmail($email_address);
+        $randomPassword = Str::random(8);
+        $user->password = $randomPassword;
+
+        UserRepository::update([
+            'id'       => $user->id,
+            'password' => Hash::make($randomPassword)
+        ]);
+
+        Mail::to($email_address)->send(new ResetPassword($user));
+
+        return redirect('/login');
+    }
 }

@@ -23,16 +23,42 @@
         <div class="header">
             <div class="header-side">
                 <div class="header-buttons">
+                    @if (Auth::user() && Auth::user()->is_admin)
+                        <div class="dropdown show">
+                            <a id="dropdownMenuLinkAdmin" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('images/icons/edit-icon.png') }}" alt="Funções Administrativas" width="25px" height="25px">
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a href="{{ route('getCategories') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Listar categorias') }}</a>                  
+                                <a href="{{ route('insertCategories') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Inserir categorias') }}</a>                  
+                            </div>
+                        </div>
+                    @endif
                     <div class="dropdown show">
                         <a id="dropdownMenuLink" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ asset('images/icons/person-icon.png') }}" alt="Usuario" width="25px" height="25px">
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a href="{{ route('login') }}" class="dropdown-item">Log in</a>
-                            <div class="dropdown-divider"></div>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="dropdown-item" aria-labelledby="navbarDropdown">Register</a>
+                            @if (Auth::user())
+                                <a href="{{ route('profile', auth()->user()->id) }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ Auth::user()->name }}</a>
+                                <a href="{{ route('deleteProfile', auth()->user()->id) }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Excluir conta')}}</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>                            
+                            @endif
+                            @if (!Auth::user())
+                                <a href="{{ route('login') }}" class="dropdown-item">Log in</a>
+                                <div class="dropdown-divider"></div>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="dropdown-item" aria-labelledby="navbarDropdown">Register</a>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -52,12 +78,15 @@
                     <input type="text" id="search-product" name="search-product">
                 </div>
             </div>
+
+            @php 
+                $categories = App\Repositories\CategoryRepository::index(); 
+            @endphp 
+
             <div class="header-categories">
-                <a href="http://" id="homepage" target="_blank" rel="alternate">HOME</a>
-                <a href="http://" id="colecoes" target="_blank" rel="alternate">COLEÇÕES</a>
-                <a href="http://" id="camisetas" target="_blank" rel="alternate">CAMISETAS</a>
-                <a href="http://" id="regatas" target="_blank" rel="alternate">REGATAS</a>
-                <a href="http://" id="moletons" target="_blank" rel="alternate">MOLETONS</a>
+                @foreach($categories as $category)
+                    <a href="http://" id={{ $category->id }}" target="_blank" rel="alternate">{{ $category->name }}</a>
+                @endforeach
             </div>
         </div>
 
