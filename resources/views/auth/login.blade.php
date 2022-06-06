@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="{{ route('password.request') }}" target="_blank" rel="alternate">Esqueci minha senha</a>
+                                    <a href="{{ route('password.request') }}" rel="alternate">Esqueci minha senha</a>
                                 </div>
                             </div>
                         </div>
