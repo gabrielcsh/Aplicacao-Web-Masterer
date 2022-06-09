@@ -11,11 +11,34 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type='text/javascript' src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+
+
+<script type='text/javascript'>
+
+    $j=jQuery.noConflict();
+
+    $j(document).ready(function () {
+
+        $("#preco").inputmask('currency',{"autoUnmask": true,
+            radixPoint:",",
+            groupSeparator: ".",
+            allowMinus: false,
+            prefix: 'R$ ',
+            digits: 2,
+            digitsOptional: false,
+            rightAlign: false,
+            unmaskAsNumber: true
+        });
+    });
+</script>
 
         <!-- Styles -->
-        <link href="{{ asset('css/layouts/site/index.css') }}" rel="stylesheet">
         <link href="{{ asset('css/layouts/site/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/layouts/site/footer.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/layouts/category/insert/index.css') }}" rel="stylesheet">
 
         <title>Masterer</title>
     </head>
@@ -23,47 +46,10 @@
         <div class="header">
             <div class="header-side">
                 <div class="header-buttons">
-                    @if (Auth::user() && Auth::user()->is_admin)
-                        <div class="dropdown show">
-                            <a id="dropdownMenuLinkAdmin" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ asset('images/icons/edit-icon.png') }}" alt="Funções Administrativas" width="25px" height="25px">
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a href="{{ route('getCategories') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Listar categorias') }}</a>
-                                <a href="{{ route('insertCategories') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Inserir categorias') }}</a>
-                                <a href="{{ route('product.index') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Listar produtos') }}</a>
-                                <a href="{{ route('product.create') }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Inserir produtos') }}</a>
-                            </div>
-                        </div>
-                    @endif
-                    <div class="dropdown show">
-                        <a id="dropdownMenuLink" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ asset('images/icons/person-icon.png') }}" alt="Usuario" width="25px" height="25px">
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @if (Auth::user())
-                                <a href="{{ route('profile', auth()->user()->id) }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ Auth::user()->name }}</a>
-                                <a href="{{ route('deleteProfile', auth()->user()->id) }}" class="dropdown-item" aria-labelledby="navbarDropdown">{{ __('Excluir conta')}}</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            @endif
-                            @if (!Auth::user())
-                                <a href="{{ route('login') }}" class="dropdown-item">Log in</a>
-                                <div class="dropdown-divider"></div>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="dropdown-item" aria-labelledby="navbarDropdown">Register</a>
-                                @endif
-                            @endif
-                        </div>
-                    </div>
+                    <a href="{{ route('homePage') }}"
+                     rel="alternate">
+                        <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
+                    </a>
                     <a href="" target="_blank" rel="alternate">
                         <img src="{{ asset('images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
                     </a>
@@ -77,41 +63,55 @@
                     <input type="text" id="search-product" name="search-product">
                 </div>
             </div>
-
-            @php
-                $categories = App\Repositories\CategoryRepository::index();
-            @endphp
-
-            <div class="header-categories">
-                @foreach($categories as $category)
-                    <a href="http://" id={{ $category->id }}" target="_blank" rel="alternate">{{ $category->name }}</a>
-                @endforeach
-            </div>
         </div>
 
+        @if(Session::has('message'))
+        <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+            {{ Session::get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif
         <div class="content">
+            <div class="form-content">
+            @foreach ($resources as $product)
+                <form method="POST" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('put')
+                    <div class="form-inputs">
 
-            <div class="container">
-                {{-- <div class="parent ">
-                    @foreach($resources as $product)
+                        <h2 style="align-self: center;">Editar Produto</h2>
 
-                    @endforeach
-                </div> --}}
-                <div class="row row-cols-1 row-cols-md-3">
-                    @foreach($resources as $product)
-                        <div class="col mb-4">
-                            <div class="card" style="width: 18rem;">
-                                <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
-                                <div class="card-body">
-                                  <h5 class="card-title">{{$product->name}}</h5>
-                                  <p class="card-text">R$ {{$product->preco}}</p>
-                                  <a href="#" class="btn btn-primary">Comprar</a>
-                                </div>
+                            <input id="name" type="text" value="{{ $product->name }}" class="input-texto @error('name') is-invalid @enderror" name="name" required autocomplete="name" placeholder="Nome do produto" autofocus>
+                            <input id="description" type="text" value="{{ $product->description }}" class="input-texto @error('description') is-invalid @enderror" name="description" required autocomplete="description" placeholder="Descrição do produto" autofocus>
+                            <input id="preco" type="text" value="{{ $product->preco }}" class="input-texto @error('preco') is-invalid @enderror" name="preco" required autocomplete="preco" placeholder="Preço do produto" autofocus>
+                            <br>
+                            <select class="form-select" name="category" aria-label="Default select example">
+                                <option selected>Selecione uma categoria para este produto</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if ($category->id==$product->categorie_id) selected="selected" @endif>{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                            <br>
+                            <div class="btn btn-mdb-color btn-rounded float-left">
+                                <span>Add photo</span>
+                                <input type="file" name="image">
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+                            @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
+                        <button type="submit" class="btn btn-primary form-button">
+                            {{ __('Editar Produto') }}
+                        </button>
+                    </div>
+                </form>
+            @endforeach
+
+        </div>
         </div>
 
         <div class="footer">

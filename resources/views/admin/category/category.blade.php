@@ -15,7 +15,7 @@
         <!-- Styles -->
         <link href="{{ asset('css/layouts/site/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/layouts/site/footer.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/layouts/category/insert/index.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/layouts/category/index.css') }}" rel="stylesheet">
 
         <title>Masterer</title>
     </head>
@@ -26,9 +26,6 @@
                     <a href="{{ route('homePage') }}"
                      rel="alternate">
                         <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
-                    </a>
-                    <a href="" target="_blank" rel="alternate">
-                        <img src="{{ asset('images/icons/fone-icon.png') }}" alt="Contato" width="25px" height="25px">
                     </a>
                     <a href="" target="_blank" rel="alternate">
                         <img src="{{ asset('images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
@@ -45,36 +42,37 @@
             </div>
         </div>
 
-        @if(Session::has('message'))
-        <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
-            {{ Session::get('message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
         <div class="content">
+            @php
+                $categories = App\Repositories\CategoryRepository::index();
+            @endphp
             <div class="form-content">
-            <form method="POST" action="{{ route('createCategory') }}">
-                @csrf
-                <div class="form-inputs">
-                
-                    <h2 style="align-self: center;">Inserir Categoria</h2>
-                    <p>Preencha os dados da categoria que deseja inserir.</p>
-                    <input id="name" type="text" class="input-texto @error('name') is-invalid @enderror" name="name" required autocomplete="name" placeholder="Nome da categoria" autofocus>
+                <h2 style="align-self: center;">Lista de categorias</h2>
+                @if(Session::has('message'))
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+                        {{ Session::get('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <ul class="list-group list-group-flush">
+                    @foreach($categories as $category)
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="{{ $category->id }}">
+                            {{ $category->name }}
+                            <form method="POST" action="{{ route('deleteCategory', $category->id) }}" class="category-actions">
+                                @csrf
+                                <button type="submit" id="{{ $category->id }}">
+                                    <img src="{{ asset('images/icons/trash-icon.png') }}" alt="Delete category" width="20px" height="20px" style="margin-right: 8px;">
+                                </button>
 
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <button type="submit" class="btn btn-primary form-button">
-                        {{ __('Inserir Categoria') }}
-                    </button> 
-                </div>
-            </form>
-        </div>
+                                <a href="{{ route('editCategories', $category->id) }}" id="{{ $category->id }}">
+                                    <img src="{{ asset('images/icons/edit-icon2.png') }}" alt="Edit category" width="20px" height="20px">
+                                </a>
+                            </form>
+                        </li>
+                    @endforeach
+            </div>
         </div>
 
         <div class="footer">

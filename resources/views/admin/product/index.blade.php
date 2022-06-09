@@ -15,7 +15,7 @@
         <!-- Styles -->
         <link href="{{ asset('css/layouts/site/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/layouts/site/footer.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/layouts/category/insert/index.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/layouts/category/index.css') }}" rel="stylesheet">
 
         <title>Masterer</title>
     </head>
@@ -26,9 +26,6 @@
                     <a href="{{ route('homePage') }}"
                      rel="alternate">
                         <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
-                    </a>
-                    <a href="" target="_blank" rel="alternate">
-                        <img src="{{ asset('images/icons/fone-icon.png') }}" alt="Contato" width="25px" height="25px">
                     </a>
                     <a href="" target="_blank" rel="alternate">
                         <img src="{{ asset('images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
@@ -45,39 +42,35 @@
             </div>
         </div>
 
-        @if(Session::has('message'))
-        <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
-            {{ Session::get('message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        @endif
-        @php 
-            $categoriy = App\Repositories\CategoryRepository::findById(Request::route('id')); 
-        @endphp
         <div class="content">
             <div class="form-content">
-            <form method="POST" action="{{ route('editCategory', $categoriy->id) }}">
-                @csrf
-                <div class="form-inputs">
-                
-                    <h2 style="align-self: center;">Editar Categoria</h2>
-                    <p>Preencha os dados que deseja atualizar.</p>
-                    <input id="name" type="text" class="input-texto @error('name') is-invalid @enderror" name="name" value="{{ $categoriy->name }}" required autocomplete="name" placeholder="Nome" autofocus>
+                <h2 style="align-self: center;">Lista de Produtos</h2>
+                @if(Session::has('message'))
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
+                        {{ Session::get('message') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+                <ul class="list-group list-group-flush">
+                    @foreach($resources as $product)
+                        <li class="list-group-item d-flex justify-content-between align-items-center" id="{{ $product->id }}">
+                            {{ $product->name }}
+                            <form method="POST" action="{{ route('product.destroy', $product->id) }}" class="category-actions">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" id="{{ $product->id }}">
+                                    <img src="{{ asset('images/icons/trash-icon.png') }}" alt="Delete product" width="20px" height="20px" style="margin-right: 8px;">
+                                </button>
 
-                    @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <button type="submit" class="btn btn-primary form-button">
-                        {{ __('Editar Categoria') }}
-                    </button> 
-                </div>
-            </form>
-        </div>
+                                <a href="{{ route('product.edit', $product->id) }}" id="{{ $product->id }}">
+                                    <img src="{{ asset('images/icons/edit-icon2.png') }}" alt="Edit product" width="20px" height="20px">
+                                </a>
+                            </form>
+                        </li>
+                    @endforeach
+            </div>
         </div>
 
         <div class="footer">
