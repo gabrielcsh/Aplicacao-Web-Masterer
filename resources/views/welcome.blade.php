@@ -87,21 +87,34 @@
 
             <div class="header-categories">
                 @foreach($categories as $category)
-                    <a href="http://" id={{ $category->id }}" target="_blank" rel="alternate">{{ $category->name }}</a>
+                    <form action="" method="get">
+                        <button id="{{ $category->id }}" type="submit">{{ $category->name }}</button>
+                        <input type="hidden" name="category_id" value="{{ $category->id }}">
+                    </form>
                 @endforeach
             </div>
         </div>
 
+        @php
+            if (isset($_GET['category_id'])) {
+                $itens = [];
+                $indice = 0;
+                $produtos = $resources;
+                foreach ($produtos as $produto){
+                    if($produto->categorie_id == $_GET['category_id']){
+                        $itens[$indice] = $produto;
+                        $indice++;
+                    }
+                }
+            }
+        @endphp
+
         <div class="content">
 
             <div class="container">
-                {{-- <div class="parent ">
-                    @foreach($resources as $product)
 
-                    @endforeach
-                </div> --}}
                 <div class="row row-cols-1 row-cols-md-3">
-                    @foreach($resources as $product)
+                    @foreach($itens as $product)
                         <div class="col mb-4">
                             <div class="card" style="width: 18rem;">
                                 <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
