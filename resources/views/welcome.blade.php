@@ -73,9 +73,12 @@
                         <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                     </a>
                 </div>
-                <div class="header-search">
-                    <input type="text" id="search-product" name="search-product">
-                </div>
+                <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
+                    <div class="header-search form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
+                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                    </div>
+                </form>
             </div>
 
             @php
