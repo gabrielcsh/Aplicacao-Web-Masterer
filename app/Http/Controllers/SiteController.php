@@ -16,6 +16,11 @@ class SiteController extends Controller
     {
         $resources = Product::all();
 
+        if (request()->get('search-product')) {
+            $nameProduct = request()->get('search-product');
+            $resources = Product::where('name', 'like', "%{$nameProduct}%")->get();
+        }
+
         return view('welcome', [
             'resources' => $resources
         ]);
