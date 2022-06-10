@@ -28,9 +28,6 @@
                         <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
                     </a>
                     <a href="" target="_blank" rel="alternate">
-                        <img src="{{ asset('images/icons/fone-icon.png') }}" alt="Contato" width="25px" height="25px">
-                    </a>
-                    <a href="" target="_blank" rel="alternate">
                         <img src="{{ asset('images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
                     </a>
                 </div>
@@ -45,9 +42,9 @@
             </div>
         </div>
 
-        @php 
-            $loggedUser = App\Repositories\UserRepository::findById(Request::route('id')); 
-        @endphp 
+        @php
+            $loggedUser = App\Repositories\UserRepository::findById(Request::route('id'));
+        @endphp
 
         @if(Session::has('message'))
         <div class="alert {{ Session::get('alert-class', 'alert-info') }} alert-dismissible fade show">
@@ -100,7 +97,7 @@
 
                     <button type="submit" class="btn btn-primary form-button">
                         {{ __('Editar perfil') }}
-                    </button> 
+                    </button>
                 </div>
             </form>
         </div>

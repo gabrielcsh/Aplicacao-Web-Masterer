@@ -21,3 +21,20 @@ html, body {
   height: 58.5%;
 }
 
+.parent {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .child {
+    width: calc(25% - 10px);
+  margin-left: 10px;
+  margin-top: 10px;
+  }
+
+  .img-product-index {
+    position: relative;
+    }
+    .button-img-index {
+    position: absolute;
+    }
