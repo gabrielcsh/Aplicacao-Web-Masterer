@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use NumberFormatter;
 
 class Product extends Model
 {
@@ -15,12 +16,17 @@ class Product extends Model
         'name',
         'description',
         'image',
-        'price',
+        'preco',
         'category_id'
     ];
 
     public function categories()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function formatPrice()
+    {
+        return number_format((floatval($this->preco)), 2, ",", "");
     }
 }

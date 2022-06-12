@@ -2,12 +2,12 @@
     background-color: #8C2703;
     height: 260px;
     width: 100%;
-
     display: flex;
     flex-direction: row;
     margin: 0;
     align-items: center;
     justify-content: space-around;
+    margin-top: auto;
 }
 
 .footer a {
