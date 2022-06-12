@@ -3264,11 +3264,11 @@ textarea.form-control-lg {
   border-color: #212529;
 }
 
-.btn-outline-primary {
+.btn-primary {
   color: #0d6efd;
   border-color: #0d6efd;
 }
-.btn-outline-primary:hover {
+.btn-primary:hover {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;

@@ -69,14 +69,14 @@
                     </a>
                 </div>
                 <div class="header-center">
-                    <a href="" target="_self" rel="alternate">
+                    <a href="{{route('homePage')}}" target="_self" rel="alternate">
                         <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                     </a>
                 </div>
                 <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
                     <div class="header-search form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
-                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                        <button class="btn btn-primary my-2 my-sm-0" type="submit">Buscar</button>
                     </div>
                 </form>
             </div>
@@ -96,8 +96,8 @@
         </div>
 
         @php
+            $itens = [];
             if (isset($_GET['category_id'])) {
-                $itens = [];
                 $indice = 0;
                 $produtos = $resources;
                 foreach ($produtos as $produto){
@@ -114,25 +114,39 @@
             <div class="container">
 
                 <div class="row row-cols-1 row-cols-md-3">
-                    @foreach($itens as $product)
-                        <div class="col mb-4">
-                            <div class="card" style="width: 18rem;">
-                                <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
-                                <div class="card-body">
-                                  <h5 class="card-title">{{$product->name}}</h5>
-                                  <p class="card-text">R$ {{$product->preco}}</p>
-                                  <a href="#" class="btn btn-primary">Comprar</a>
+                    @if (count($itens))
+                        @foreach($itens as $product)
+                            <div class="col mb-4">
+                                <div class="card" style="width: 18rem;">
+                                    <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{$product->name}}</h5>
+                                    <p class="card-text">R$ {{$product->formatPrice()}}</p>
+                                    <a href="#" class="btn btn-primary">Comprar</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @else
+                        @foreach($resources as $product)
+                            <div class="col mb-4">
+                                <div class="card" style="width: 18rem;">
+                                    <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{$product->name}}</h5>
+                                    <p class="card-text">R$ {{$product->formatPrice()}}</p>
+                                    <a href="#" class="btn btn-primary">Comprar</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
-
         <div class="footer">
             <div class="footer-social">
-                <a href="" target="_self" rel="alternate">
+                <a href="{{route('homePage')}}" target="_self" rel="alternate">
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                 </a>
                 <div class="footer-social-links">
