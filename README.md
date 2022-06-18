@@ -5,7 +5,7 @@ Trabalho FACOM - Este projeto foi entregue como trabalho de duas disciplinas, se
 
 - Integrantes trabalho programação para web: Enzo Paiva, Arthur Ramires, Gabriel Cardoso e Nicole Fernanda.
 
-- Integrantes trabalho computação distribuida: Enzo Paiva, Arthur Ramires, Gabriel Cardoso e Nicole Fernanda.
+- Integrantes trabalho computação distribuida: Enzo Paiva, Arthur Ramires, Milena Alegre e Vitoria Rocha.
 
 ## Projeto feito com as tecnologias:
 - PHP 7.4 (FrameWork Laravel 8.83)
