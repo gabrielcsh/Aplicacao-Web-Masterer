@@ -21,6 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')
     ->namespace('Api\Dog')
     ->group(function () {
-        Route::get('buscarDog',
+        Route::get('consultar-dog/{dogCode}',
                    'DogController@buscarDog')->name('dog.buscar');
     });
