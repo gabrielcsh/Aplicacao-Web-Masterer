@@ -30,4 +30,13 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'dog' => [
+        'ambiente' => [
+            'url_base' => env('DOG_API_URL')
+        ],
+        'rotas' => [
+            'consultar-dog'          => 'dog/:codeDog',
+        ]
+    ]
+
 ];

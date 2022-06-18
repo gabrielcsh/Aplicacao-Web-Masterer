@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:sanctum')
+    ->namespace('Api\Dog')
+    ->group(function () {
+        Route::get('buscarDog',
+                   'DogController@buscarDog')->name('dog.buscar');
+    });
