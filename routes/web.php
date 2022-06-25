@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\CarrinhoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,8 @@ Route::get('/user/delete/{id}', function () {
 })->name('deleteProfile');
 
 Auth::routes();
+
+Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
