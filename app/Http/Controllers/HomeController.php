@@ -33,4 +33,21 @@ class HomeController extends Controller
     {
         return view('adminHome');
     }
+
+    public function produto($id = null)
+    {
+        if( !empty($id) ) {
+            $registro = Produto::where([
+                'id'    => $id,
+                'ativo' => 'S'
+                ])->first();
+
+            if( !empty($registro) ) {
+                return view('home.produto', [
+                    'registro' => $registro
+                ]);
+            }
+        }
+        return redirect()->route('home');
+    }
 }
