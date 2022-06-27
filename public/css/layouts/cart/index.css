@@ -1,0 +1,118 @@
+body {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+html, body {
+    height: 100%;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+.content .form-content {
+    width: 100%;
+    background-color: #E4E4EB;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px;
+}
+
+.content .form-content p {
+    margin: 0;
+    margin-top: 30px;
+    padding: 0;
+    color: #9C98A6;
+}
+
+.content .form-content ul .list-group-item .category-actions{
+}
+
+.content .form-content ul .list-group-item .category-actions button{
+    background-color: white;
+    color: black;
+    border: 0;
+}
+
+.content .form-content .cadastrar-link {
+    margin: 0;
+    padding: 0;
+    color: #eb8817;
+}
+
+.content .form-content h2{
+    color: #32264D
+}
+
+.content .form-content h1{
+    color: #32264D
+}
+
+.content .form-inputs {
+    min-width: 500px;
+    background-color: #E4E4EB;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+.content .form-inputs a:link, a:visited {
+    text-align: center;
+    color: #9C98A6;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0;
+    margin-top: 10px;
+}
+
+.content .form-inputs .form-button {
+    background-color: #eb8817;
+    border-radius:5px;
+    border: 0;
+    color: #32264D;
+    font-size: 16px;
+    height: 56px;
+    margin-top: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.content .form-inputs .delete-button {
+    background-color: #DC143C;
+    border-radius:5px;
+    border: 0;
+    color: #32264D;
+    font-size: 16px;
+    height: 56px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.content .form-inputs .input-texto {
+    background-color: white;
+    padding: 6px;
+    border: 1px solid #919094;
+    padding-left: 40px;
+    border-radius: 5px;
+    height: 42px;
+    margin-top: 8px;
+}
