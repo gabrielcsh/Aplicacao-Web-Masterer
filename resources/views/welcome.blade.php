@@ -122,7 +122,11 @@
                                     <div class="card-body">
                                     <h5 class="card-title">{{$product->name}}</h5>
                                     <p class="card-text">R$ {{$product->formatPrice()}}</p>
-                                    <a href="#" class="btn btn-primary">Comprar</a>
+                                    <form method="POST" action="{{ route('carrinho.adicionar') }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <button class="btn-large col l6 m6 s6 green accent-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>   
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -135,8 +139,11 @@
                                     <div class="card-body">
                                     <h5 class="card-title">{{$product->name}}</h5>
                                     <p class="card-text">R$ {{$product->formatPrice()}}</p>
-                                    <a href="#" class="btn btn-primary">Comprar</a>
-                                    </div>
+                                    <form method="POST" action="{{ route('carrinho.adicionar') }}">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $product->id }}">
+                                        <button class="btn-large col l6 m6 s6 green accent-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>   
+                                    </form>
                                 </div>
                             </div>
                         @endforeach

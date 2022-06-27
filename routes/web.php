@@ -38,7 +38,15 @@ Route::get('/user/delete/{id}', function () {
 
 Auth::routes();
 
-Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho');
+Route::get('/carrinho', [App\Http\Controllers\CarrinhoController::class, 'index'])->name('carrinho.index');
+Route::get('/carrinho/adicionar', function() {
+    return redirect()->route('home');
+});
+Route::post('/carrinho/adicionar', [App\Http\Controllers\CarrinhoController::class, 'adicionar'])->name('carrinho.adicionar');
+Route::delete('/carrinho/remover', [App\Http\Controllers\CarrinhoController::class, 'remover'])->name('carrinho.remover');
+Route::post('/carrinho/concluir', [App\Http\Controllers\CarrinhoController::class, 'concluir'])->name('carrinho.concluir');
+Route::get('/carrinho/compras', [App\Http\Controllers\CarrinhoController::class, 'compras'])->name('carrinho.compras');
+Route::post('/carrinho/cancelar', [App\Http\Controllers\CarrinhoController::class, 'cancelar'])->name('carrinho.cancelar');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -68,7 +76,7 @@ Route::post('/admin/category/edit/{id}', [App\Http\Controllers\CategoryControlle
 Route::post('/admin/category/create', [App\Http\Controllers\CategoryController::class, 'createCategory'])->name('createCategory')->middleware('is_admin');
 Route::post('/admin/category/delete/{id}', [App\Http\Controllers\CategoryController::class, 'deleteCategory'])->name('deleteCategory')->middleware('is_admin');
 
-
+Route::get('/produto/{id}', 'HomeController@produto')->name('produto');
 Route::get('/admin/products', [ProductController::class, 'index'])->name('product.index')->middleware('is_admin');
 Route::get('/admin/products/create', [ProductController::class, 'create'])->name('product.create')->middleware('is_admin');
 Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('product.edit')->middleware('is_admin');
