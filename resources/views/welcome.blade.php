@@ -64,7 +64,7 @@
                             @endif
                         </div>
                     </div>
-                    <a href="" target="_blank" rel="alternate">
+                    <a href="{{ route('carrinho.index') }}" rel="alternate">
                         <img src="{{ asset('images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
                     </a>
                 </div>
