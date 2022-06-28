@@ -21,7 +21,7 @@ class Order extends Model
     public function pedido_compra()
     {
         return $this->hasMany('App\Models\SaleOrder')
-            ->select( \DB::raw('product_id, count(1) as Qtd') )
+            ->select( \DB::raw('product_id,  sum(valor) as valores, count(1) as Qtd') )
             ->groupBy('product_id')
             ->orderBy('product_id', 'desc');
     }
@@ -30,5 +30,10 @@ class Order extends Model
     {
         $pedido = self::where($where)->first(['id']);
         return !empty($pedido->id) ? $pedido->id : null;
+    }
+
+    public function sale_orders_itens()
+    {
+        return $this->hasMany('App\Models\SaleOrder');
     }
 }

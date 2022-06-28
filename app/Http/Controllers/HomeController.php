@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
@@ -37,13 +38,12 @@ class HomeController extends Controller
     public function produto($id = null)
     {
         if( !empty($id) ) {
-            $registro = Produto::where([
+            $registro = Product::where([
                 'id'    => $id,
-                'ativo' => 'S'
                 ])->first();
 
             if( !empty($registro) ) {
-                return view('home.produto', [
+                return view('produto', [
                     'registro' => $registro
                 ]);
             }

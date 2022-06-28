@@ -9,10 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" media="screen,projection">
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/carrinho.js"></script>
 
     <link href="{{ asset('css/layouts/site/index.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layouts/site/header.css') }}" rel="stylesheet">
@@ -29,21 +32,32 @@
                    rel="alternate">
                     <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
                 </a>
+                <div>
+                    <a class="btn btn-primary red" href="{{ route('carrinho.compras') }}" rel="alternate" role="button">
+                        Minhas Compras
+                        <img src="{{ asset('../images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
+                    </a>
+                </div>
             </div>
+            
             <div class="header-center">
                 <a href="" target="_self" rel="alternate">
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                 </a>
             </div>
-            <div class="header-search">
-                <input type="text" id="search-product" name="search-product">
-            </div>
+            <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
+                <div class="header-search form-inline my-2 my-lg-0 h-25">
+                    <input class="form-control mr-sm-2 h-25" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
+                    <button class="btn red btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="content">
         <div class="container">
             <div class="row d-flex align-items-center">
                 <h3>Produtos no Carrinho</h3>
+
             </div>
             <div class="row d-flex align-items-center">
                 @forelse ($pedidos as $order)
@@ -64,19 +78,19 @@
                     <tbody>
                     @php
                         $total_pedido = 0;
-                        @endphp
+                    @endphp
                     @foreach ($order->pedido_compra as $pedido_compra)
                         <tr class="mt-3">
                             <td>
                                 <img width="100" height="100" src="{{ URL::asset("/images-products/{$pedido_compra->produto->image}") }}">
                             </td>
                             <td class="d-flex justify-content-center align-items-center mt-4">
-                                <div class="center-align">
-                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->produto_id }}, 1 )">
+                                <div class="center-align mt-3">
+                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 1 )">
                                         <i class="material-icons small">remove_circle</i>
                                     </a>
                                     <span class="col 14 m4 s4">{{$pedido_compra->Qtd}} </span>
-                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoAdicionarProduto({{ $pedido_compra->produto_id }})">
+                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoAdicionarProduto({{ $pedido_compra->product_id }})">
                                         <i class="material-icons small">add_circle</i>
                                     </a>
                                 </div>
@@ -86,10 +100,10 @@
                             @php
                                 $total_pedido += $pedido_compra->Qtd * $pedido_compra->produto->preco;
                                 @endphp
-                            <td>R$ {{ number_format($pedido_compra->Qtd * $pedido_compra->produto->preco, 2, ',', '.') }}
+                            <td>R$ {{ number_format($total_pedido, 2, ',', '.') }}
                             <td>
                                 <!--action=" { { route('carrinho.remove', $order->id) }} -->
-                                <a href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->produto_id }}, 0)" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Retirar produto do carrinho?">
+                                <a href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 0)" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Retirar produto do carrinho?">
                                     <img src="{{ asset('images/icons/trash-icon.png') }}" alt="Delete product" width="20px" height="20px" style="margin-right: 8px;">
                                 </a>
                             </td>
@@ -102,12 +116,12 @@
                 <strong class="col offset-16 offset-m6 offset-s6 14 m4 s4 right-align">Total do Pedido: </strong>
                 <span class="col 12 m2 s2"> R$ {{ number_format($total_pedido, 2, ',', '.') }}</span>
             </div>
-            <div class="row d-flex justify-content-end">
+            <div class="row d-flex">
+                <a class="btn btn-outline red darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
                 <form method="POST" action="{{ route('carrinho.concluir') }}">
                     {{ csrf_field() }}
-                    <input type="hidden" name="order_id" value="{{ $pedido_compra->id }}">
-                    <a class="btn btn-outline-dark tooltipped col 12 s4 m4 offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
-                    <button type="submit" class="btn btn-outline-dark tooltipped col 14 s4 m4 offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
+                    <input type="hidden" name="order_id" value="{{ $order->id }}">
+                    <button type="submit" class="btn btn-outline red darken-4 tooltipped offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
                         Concluir compra
                     </button>
                 </form>
@@ -148,19 +162,19 @@
         </div>
         <div class="footer-info">
             <div class="footer-info-contato">
-                <h3>Contato</h3>
+                <h5>Contato</h5>
                 <a href="http://" id="atendimento" target="_blank" rel="alternate">Atendimento</a>
                 <a href="http://" id="fale_conosco" target="_blank" rel="alternate">Fale Conosco</a>
                 <a href="http://" id="duvidas" target="_blank" rel="alternate">Dúvidas</a>
             </div>
             <div class="footer-info-duvidas">
-                <h3>Dúvidas</h3>
+                <h5>Dúvidas</h5>
                 <a href="http://" id="politica_privacidade" target="_blank" rel="alternate">Política de Privacidade</a>
                 <a href="http://" id="politica_trocas" target="_blank" rel="alternate">Política de Trocas</a>
                 <a href="http://" id="pagamento" target="_blank" rel="alternate">Pagamento e Envio</a>
             </div>
             <div class="footer-info-newsletter">
-                <h3>Receba novidades</h3>
+                <h5>Receba novidades</h5>
                 <label for="newsletter-input">Assine e receba todas as novidades em primeira mão:</label>
                 <input type="text" id="newsletter-input" name="newsletter-input">
             </div>
@@ -169,6 +183,25 @@
 </body>
 </html>
 
-@push('scripts')
-    <script type="text/javascript" src="/js/carrinho.js"></script>
-@endpush
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+@stack('scripts')
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $(".button-collapse").sideNav();
+        $('select').material_select();
+    });
+    
+    function carrinhoRemoverProduto( idpedido, idproduto, item ) {
+        $('#form-remover-produto input[name="order_id"]').val(idpedido);
+        $('#form-remover-produto input[name="product_id"]').val(idproduto);
+        $('#form-remover-produto input[name="item"]').val(item);
+        $('#form-remover-produto').submit();
+    }
+
+    function carrinhoAdicionarProduto( idproduto ) {
+        $('#form-adicionar-produto input[name="id"]').val(idproduto);
+        $('#form-adicionar-produto').submit();
+    }
+</script>
