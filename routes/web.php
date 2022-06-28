@@ -76,7 +76,7 @@ Route::post('/admin/category/edit/{id}', [App\Http\Controllers\CategoryControlle
 Route::post('/admin/category/create', [App\Http\Controllers\CategoryController::class, 'createCategory'])->name('createCategory')->middleware('is_admin');
 Route::post('/admin/category/delete/{id}', [App\Http\Controllers\CategoryController::class, 'deleteCategory'])->name('deleteCategory')->middleware('is_admin');
 
-Route::get('/produto/{id}', 'HomeController@produto')->name('produto');
+Route::get('/produto/{id}', [HomeController::class, 'produto'])->name('home.produto');
 Route::get('/admin/products', [ProductController::class, 'index'])->name('product.index')->middleware('is_admin');
 Route::get('/admin/products/create', [ProductController::class, 'create'])->name('product.create')->middleware('is_admin');
 Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('product.edit')->middleware('is_admin');

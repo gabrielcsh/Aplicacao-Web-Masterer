@@ -118,34 +118,41 @@
                         @if (count($itens))
                             @foreach($itens as $product)
                                 <div class="col mb-4">
-                                    <div class="card" style="width: 18rem;">
-                                        <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$product->name}}</h5>
-                                            <p class="card-text">R$ {{$product->formatPrice()}}</p>
-                                            <form method="POST" action="{{ route('carrinho.adicionar') }}">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                                <button class="btn-large red darken-4 col l6 m6 s6 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>
-                                            </form>
+                                    <a style="text-decoration: none;" href="{{ route('home.produto', $product->id) }}"> 
+                                        <div class="card" style="width: 18rem;">
+                                                <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{$product->name}}</h5>
+                                                <p class="card-text">R$ {{$product->formatPrice()}}</p>
+                                                <form method="POST" action="{{ route('carrinho.adicionar') }}">
+                                                    {{ csrf_field() }}
+                                                    <input type="hidden" name="id" value="{{ $product->id }}">
+                                                    <button class="btn-large red darken-4 col l12 m12 s12 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>
+                                                </form>
+                                            </div>
+                                            
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
+
                         @else
                             @foreach($resources as $product)
                                 <div class="col mb-4">
                                     <div class="card" style="width: 18rem;">
-                                        <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{$product->name}}</h5>
-                                            <p class="card-text">R$ {{$product->formatPrice()}}</p>
-                                            <form method="POST" action="{{ route('carrinho.adicionar') }}">
-                                                {{ csrf_field() }}
-                                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                                <button class="btn-large col l6 m6 s6 red darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>
-                                            </form>
-                                        </div>
+                                        <a style="text-decoration: none; color:black;" href="{{ route('home.produto', $product->id) }}">
+                                            <img class='card-img-top img-product-index' src='{{URL::asset("/images-products/{$product->image}")}}' height="200" width="200"  alt='Example.jpeg'>
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{$product->name}}</h5>
+                                                <p class="card-text">R$ {{$product->formatPrice()}}</p>
+                                                
+                                            </div>
+                                        </a>
+                                        <form method="POST" action="{{ route('carrinho.adicionar') }}">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="id" value="{{ $product->id }}">
+                                            <button class="btn-large col l12 m12 s12 red darken-4 tooltipped" data-position="bottom" data-delay="50" data-tooltip="O produto será adicionado ao seu carrinho">Comprar</button>
+                                        </form>
                                     </div>
                                 </div>
                             @endforeach
