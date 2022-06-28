@@ -38,6 +38,7 @@ class ResetPasswordController extends Controller
     {
         $email_address = $_REQUEST['email'];
         $this->sendEmail($email_address);
+        return redirect()->route('login');
     }
 
     public function sendEmail($email_address)
@@ -52,7 +53,5 @@ class ResetPasswordController extends Controller
         ]);
 
         Mail::to($email_address)->send(new ResetPassword($user));
-
-        return redirect('/login');
     }
 }
