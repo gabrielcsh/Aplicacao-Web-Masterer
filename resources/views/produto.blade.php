@@ -130,7 +130,7 @@
                                 <td><span>{!! $registro->description !!}</span><td>
                             </tr>
                             <tr>
-                                <td><h3 class="left col l6"> R$ {{ number_format($registro->valor, 2, ',', '.') }} </h3></td>
+                                <td><h3 class="left col l6"> R$ {{ number_format($registro->preco, 2, ',', '.') }} </h3></td>
                             </tr>
                                 <td>
                                     <form method="POST" action="{{ route('carrinho.adicionar') }}">
