@@ -124,12 +124,12 @@ class CarrinhoController extends Controller
         SaleOrder::where($where_produto)->delete();
 
         $check_pedido = SaleOrder::where([
-            'pedido_id' => $produto->pedido_id
+            'order_id' => $produto->order_id
             ])->exists();
 
         if( !$check_pedido ) {
             Pedido::where([
-                'id' => $produto->pedido_id
+                'id' => $produto->order_id
                 ])->delete();
         }
 
@@ -166,7 +166,7 @@ class CarrinhoController extends Controller
         }
 
         SaleOrder::where([
-            'pedido_id' => $idpedido
+            'order_id' => $idpedido
             ])->update([
                 'status' => 'pago'
             ]);
@@ -180,4 +180,23 @@ class CarrinhoController extends Controller
 
         return redirect()->route('carrinho.compras');
     }
+
+    public function compras()
+    {
+
+        $compras = Order::where([
+            'status'  => 'pago',
+            'user_id' => Auth::id()
+            ])->orderBy('created_at', 'desc')->get();
+
+        $cancelados = Order::where([
+            'status'  => 'cancelado',
+            'user_id' => Auth::id()
+            ])->orderBy('updated_at', 'desc')->get();
+
+        return view('carrinho.compras', compact('compras', 'cancelados'));
+
+    }
+
+    
 }

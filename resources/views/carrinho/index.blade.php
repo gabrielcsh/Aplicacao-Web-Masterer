@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" media="screen,projection">
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -35,9 +37,12 @@
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                 </a>
             </div>
-            <div class="header-search">
-                <input type="text" id="search-product" name="search-product">
-            </div>
+            <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
+                <div class="header-search form-inline my-2 my-lg-0 h-25">
+                    <input class="form-control mr-sm-2 h-25" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
+                    <button class="btn red btn-primary my-2 my-sm-0" type="submit">Buscar</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="content">
@@ -64,7 +69,7 @@
                     <tbody>
                     @php
                         $total_pedido = 0;
-                        @endphp
+                    @endphp
                     @foreach ($order->pedido_compra as $pedido_compra)
                         <tr class="mt-3">
                             <td>
@@ -102,12 +107,12 @@
                 <strong class="col offset-16 offset-m6 offset-s6 14 m4 s4 right-align">Total do Pedido: </strong>
                 <span class="col 12 m2 s2"> R$ {{ number_format($total_pedido, 2, ',', '.') }}</span>
             </div>
-            <div class="row d-flex justify-content-end">
+            <div class="row d-flex">
+                <a class="btn btn-outline red darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
                 <form method="POST" action="{{ route('carrinho.concluir') }}">
                     {{ csrf_field() }}
-                    <input type="hidden" name="order_id" value="{{ $pedido_compra->id }}">
-                    <a class="btn btn-outline-dark tooltipped col 12 s4 m4 offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
-                    <button type="submit" class="btn btn-outline-dark tooltipped col 14 s4 m4 offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
+                    <input type="hidden" name="order_id" value="{{ $order->id }}">
+                    <button type="submit" class="btn btn-outline red darken-4 tooltipped offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
                         Concluir compra
                     </button>
                 </form>
@@ -148,19 +153,19 @@
         </div>
         <div class="footer-info">
             <div class="footer-info-contato">
-                <h3>Contato</h3>
+                <h5>Contato</h5>
                 <a href="http://" id="atendimento" target="_blank" rel="alternate">Atendimento</a>
                 <a href="http://" id="fale_conosco" target="_blank" rel="alternate">Fale Conosco</a>
                 <a href="http://" id="duvidas" target="_blank" rel="alternate">Dúvidas</a>
             </div>
             <div class="footer-info-duvidas">
-                <h3>Dúvidas</h3>
+                <h5>Dúvidas</h5>
                 <a href="http://" id="politica_privacidade" target="_blank" rel="alternate">Política de Privacidade</a>
                 <a href="http://" id="politica_trocas" target="_blank" rel="alternate">Política de Trocas</a>
                 <a href="http://" id="pagamento" target="_blank" rel="alternate">Pagamento e Envio</a>
             </div>
             <div class="footer-info-newsletter">
-                <h3>Receba novidades</h3>
+                <h5>Receba novidades</h5>
                 <label for="newsletter-input">Assine e receba todas as novidades em primeira mão:</label>
                 <input type="text" id="newsletter-input" name="newsletter-input">
             </div>
