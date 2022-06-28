@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-    
+
     }
 
     /**
@@ -45,7 +45,13 @@ class UserController extends Controller
     {
         $user =  UserRepository::findById($id);
 
-        if (!($user->email == $_REQUEST['email'] && Hash::check($_REQUEST['password'], $user->password))) {
+        if($user == null){
+            Session::flash('message', 'Email incorreto, tente novamente!');
+            Session::flash('alert-class', 'alert-danger');
+            return redirect()->route('profile', ['id' => $user->id]);
+        }
+
+        if (!Hash::check($_REQUEST['password'], $user->password)) {
             Session::flash('message', 'Senha atual incorreta, tente novamente!');
             Session::flash('alert-class', 'alert-danger');
             return redirect()->route('profile', ['id' => $user->id]);
@@ -65,7 +71,7 @@ class UserController extends Controller
 
         UserRepository::update($data);
 
-        
+
         Session::flash('message', 'Perfil atualizado com sucesso!');
         Session::flash('alert-class', 'alert-success');
         return redirect()->route('profile', ['id' => $user->id]);
