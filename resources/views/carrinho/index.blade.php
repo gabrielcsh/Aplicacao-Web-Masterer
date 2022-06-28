@@ -32,7 +32,14 @@
                    rel="alternate">
                     <img src="{{ asset('images/icons/back-icon.png') }}" alt="Contato" width="25px" height="25px">
                 </a>
+                <div>
+                    <a class="btn btn-primary red" href="{{ route('carrinho.compras') }}" rel="alternate" role="button">
+                        Minhas Compras
+                        <img src="{{ asset('../images/icons/sale-icon.png') }}" alt="Carrinho" width="25px" height="25px">
+                    </a>
+                </div>
             </div>
+            
             <div class="header-center">
                 <a href="" target="_self" rel="alternate">
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
@@ -50,6 +57,7 @@
         <div class="container">
             <div class="row d-flex align-items-center">
                 <h3>Produtos no Carrinho</h3>
+
             </div>
             <div class="row d-flex align-items-center">
                 @forelse ($pedidos as $order)
@@ -77,7 +85,7 @@
                                 <img width="100" height="100" src="{{ URL::asset("/images-products/{$pedido_compra->produto->image}") }}">
                             </td>
                             <td class="d-flex justify-content-center align-items-center mt-4">
-                                <div class="center-align">
+                                <div class="center-align mt-3">
                                     <a class="col 14 m4 s4" href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 1 )">
                                         <i class="material-icons small">remove_circle</i>
                                     </a>
@@ -96,7 +104,6 @@
                             <td>
                                 <!--action=" { { route('carrinho.remove', $order->id) }} -->
                                 <a href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 0)" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Retirar produto do carrinho?">
-                                    Retirar Produto
                                     <img src="{{ asset('images/icons/trash-icon.png') }}" alt="Delete product" width="20px" height="20px" style="margin-right: 8px;">
                                 </a>
                             </td>
