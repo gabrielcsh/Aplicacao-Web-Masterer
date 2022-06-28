@@ -15,6 +15,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/carrinho.js"></script>
 
     <link href="{{ asset('css/layouts/site/index.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layouts/site/header.css') }}" rel="stylesheet">
@@ -77,11 +78,11 @@
                             </td>
                             <td class="d-flex justify-content-center align-items-center mt-4">
                                 <div class="center-align">
-                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->produto_id }}, 1 )">
+                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 1 )">
                                         <i class="material-icons small">remove_circle</i>
                                     </a>
                                     <span class="col 14 m4 s4">{{$pedido_compra->Qtd}} </span>
-                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoAdicionarProduto({{ $pedido_compra->produto_id }})">
+                                    <a class="col 14 m4 s4" href="#" onclick="carrinhoAdicionarProduto({{ $pedido_compra->product_id }})">
                                         <i class="material-icons small">add_circle</i>
                                     </a>
                                 </div>
@@ -91,10 +92,11 @@
                             @php
                                 $total_pedido += $pedido_compra->Qtd * $pedido_compra->produto->preco;
                                 @endphp
-                            <td>R$ {{ number_format($pedido_compra->Qtd * $pedido_compra->produto->preco, 2, ',', '.') }}
+                            <td>R$ {{ number_format($total_pedido, 2, ',', '.') }}
                             <td>
                                 <!--action=" { { route('carrinho.remove', $order->id) }} -->
-                                <a href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->produto_id }}, 0)" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Retirar produto do carrinho?">
+                                <a href="#" onclick="carrinhoRemoverProduto({{ $order->id }}, {{ $pedido_compra->product_id }}, 0)" class="tooltipped" data-position="right" data-delay="50" data-tooltip="Retirar produto do carrinho?">
+                                    Retirar Produto
                                     <img src="{{ asset('images/icons/trash-icon.png') }}" alt="Delete product" width="20px" height="20px" style="margin-right: 8px;">
                                 </a>
                             </td>
@@ -174,6 +176,25 @@
 </body>
 </html>
 
-@push('scripts')
-    <script type="text/javascript" src="/js/carrinho.js"></script>
-@endpush
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+@stack('scripts')
+<script type="text/javascript">
+    $( document ).ready(function(){
+        $(".button-collapse").sideNav();
+        $('select').material_select();
+    });
+    
+    function carrinhoRemoverProduto( idpedido, idproduto, item ) {
+        $('#form-remover-produto input[name="order_id"]').val(idpedido);
+        $('#form-remover-produto input[name="product_id"]').val(idproduto);
+        $('#form-remover-produto input[name="item"]').val(item);
+        $('#form-remover-produto').submit();
+    }
+
+    function carrinhoAdicionarProduto( idproduto ) {
+        $('#form-adicionar-produto input[name="id"]').val(idproduto);
+        $('#form-adicionar-produto').submit();
+    }
+</script>

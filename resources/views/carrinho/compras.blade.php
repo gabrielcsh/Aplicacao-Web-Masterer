@@ -73,7 +73,7 @@
                             <thead class="align-items-center justify-content-around">
                                 <tr>
                                     <th></th>
-                                    <th width="240" class="d-flex justify-content-center">Qtd</th>
+                                    <th width="240" class="d-flex justify-content-center"></th>
                                     <th width="480">Produto</th>
                                     <th width="180">Valor Unit</th>
                                     <th width="180">Total</th>
@@ -85,7 +85,7 @@
                             @endphp
                             @foreach ($order->sale_orders_itens as $pedido_compra)
                                 @php
-                                    $total_produto = $pedido_compra->Qtd * $pedido_compra->produto->preco;
+                                    $total_produto = $pedido_compra->valor;
                                     $total_pedido += $total_produto;
                                 @endphp
                                 <tr class="mt-3">
@@ -135,54 +135,7 @@
                     </h5>
                 @endforelse
             </div>
-            <div class="row col s12 m12 l12">
-                <div class="divider"></div>
-                <h4>Compras canceladas</h4>
-                @forelse ($cancelados as $order)
-                    <h5 class="col l2 s12 m2"> Pedido: {{ $order->id }} </h5>
-                    <h5 class="col l5 s12 m5"> Criado em: {{ $order->created_at->format('d/m/Y H:i') }} </h5>
-                    <h5 class="col l5 s12 m5"> Cancelado em: {{ $order->updated_at->format('d/m/Y H:i') }} </h5>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Produto</th>
-                                <th>Valor</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $total_pedido = 0;
-                            @endphp
-                            @foreach ($order->pedido_compras_itens as $pedido_compra)
-                                @php
-                                    $total_pedido += $pedido_compra->valor;
-                                @endphp
-                            <tr>
-                                <td>
-                                    <img width="100" height="100" src="{{ $pedido_compra->produto->image }}">
-                                </td>
-                                <td>{{ $pedido_compra->produto->nme }}</td>
-                                <td>R$ {{ number_format($pedido_compra->valor, 2, ',', '.') }}</td>                            
-                                <td>R$ {{ number_format($pedido_compra->produto->valor, 2, ',', '.') }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="3"></td>
-                                <td><strong>Total do pedido</strong></td>
-                                <td>R$ {{ number_format($total_pedido, 2, ',', '.') }}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                @empty
-                    <div class="row">
-                        <h5 class="center">Nenhuma compra ainda foi cancelada.</h5>
-                    </div>
-                @endforelse
-            </div>
+            
         </div>
         </div>
             <form id="form-remover-produto" method="POST" action="{{ route('carrinho.remover') }}">
