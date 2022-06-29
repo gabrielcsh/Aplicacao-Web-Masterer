@@ -81,3 +81,9 @@
 	top: 0;
     z-index: 1000;
  }
+
+ .input-search-custom {
+    margin: 0 !important;
+    padding: 5px !important;
+    margin-right: 1em !important;
+ }

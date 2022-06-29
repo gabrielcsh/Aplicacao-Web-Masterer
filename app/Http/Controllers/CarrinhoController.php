@@ -21,27 +21,27 @@ class CarrinhoController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    
-    public function index() 
+
+    public function index()
     {
 
         $pedidos = Order::where([
             'status' => 'reservado',
             'user_id' => Auth::id()
         ])->get();
-        
+
         /*dd([
             $pedidos,
             $pedidos[0]->pedido_compra,
             $pedidos[0]->pedido_compra[0]->produto
         ]);*/
-        
+
         //return view('carrinho', compact('pedidos'));
         return view('carrinho.index', [
             'pedidos' => $pedidos
         ]);
     }
-    
+
     public function adicionar()
     {
 
@@ -70,7 +70,7 @@ class CarrinhoController extends Controller
                 ]);
 
             $idpedido = $pedido_novo->id;
-            
+
         }
 
         SaleOrder::create([
@@ -195,7 +195,7 @@ class CarrinhoController extends Controller
             ])->orderBy('updated_at', 'desc')->get();
 
         //return view('carrinho.compras', compact('compras', 'cancelados'));
-        return view('carrinho.COMPRAS', [
+        return view('carrinho.compras', [
             'compras' => $compras,
             'cancelados' => $cancelados
         ]);

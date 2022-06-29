@@ -39,15 +39,15 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="header-center">
                 <a href="" target="_self" rel="alternate">
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
                 </a>
             </div>
             <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
-                <div class="header-search form-inline my-2 my-lg-0 h-25">
-                    <input class="form-control mr-sm-2 h-25" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
+                <div class="header-search form-inline d-flex align-items-center">
+                    <input class="form-control input-search-custom" type="search" name="search-product" placeholder="ex: camiseta" aria-label="Search">
                     <button class="btn red btn-primary my-2 my-sm-0" type="submit">Buscar</button>
                 </div>
             </form>
@@ -116,15 +116,19 @@
                 <strong class="col offset-16 offset-m6 offset-s6 14 m4 s4 right-align">Total do Pedido: </strong>
                 <span class="col 12 m2 s2"> R$ {{ number_format($total_pedido, 2, ',', '.') }}</span>
             </div>
-            <div class="row d-flex">
-                <a class="btn btn-outline red darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
-                <form method="POST" action="{{ route('carrinho.concluir') }}">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="order_id" value="{{ $order->id }}">
-                    <button type="submit" class="btn btn-outline red darken-4 tooltipped offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
-                        Concluir compra
-                    </button>
-                </form>
+            <div class="d-flex bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <a class="btn btn-outline red darken-4 tooltipped " data-position="top" data-delay="50" data-tooltip="Voltar a página inicial para continuar comprando?" href="{{ route('homePage') }}">Continuar comprando</a>
+                </div>
+                <div class="ml-auto p-2 bd-highlight">
+                    <form method="POST" action="{{ route('carrinho.concluir') }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                        <button type="submit" class="btn btn-outline red darken-4 tooltipped offset-18 offset-s8 offset-m8" data-position="top" data-delay="50" data-tooltip="Adquirir os produtos concluindo a compra?">
+                            Concluir compra
+                        </button>
+                    </form>
+                </div>
             </div>
             @empty
                 <h5> Não há nenhum produto no Carrinho
@@ -143,7 +147,7 @@
         </form>
     </div>
     </div>
-    <div class="footer mt-3">
+    <div class="footer">
         <div class="footer-social">
             <a href="{{route('homePage')}}" target="_self" rel="alternate">
                 <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >
@@ -192,7 +196,7 @@
         $(".button-collapse").sideNav();
         $('select').material_select();
     });
-    
+
     function carrinhoRemoverProduto( idpedido, idproduto, item ) {
         $('#form-remover-produto input[name="order_id"]').val(idpedido);
         $('#form-remover-produto input[name="product_id"]').val(idproduto);

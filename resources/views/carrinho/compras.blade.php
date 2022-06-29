@@ -38,13 +38,13 @@
                 </a>
             </div>
             <form action="{{ route('homePage') }}" class="custom-form js-form-prevent-resend">
-                <div class="header-search form-inline my-2 my-lg-0 h-25">
-                    <input class="form-control mr-sm-2 h-25" type="search" name="search-product" placeholder="Busque pelo nome de um produto...." aria-label="Search">
+                <div class="header-search form-inline d-flex align-items-center">
+                    <input class="form-control input-search-custom" type="search" name="search-product" placeholder="ex: camiseta" aria-label="Search">
                     <button class="btn red btn-primary my-2 my-sm-0" type="submit">Buscar</button>
                 </div>
             </form>
         </div>
-        
+
     </div>
     <div class="content">
         <div class="container">
@@ -63,7 +63,7 @@
                 @forelse ($compras as $order)
                     <h5 class="col l6 s12 m6"> Pedido: {{ $order->id }} </h5>
                     <h5 class="col l6 s12 m6"> Criado em: {{ $order->created_at->format('d/m/Y H:i') }} </h5>
-            </div>    
+            </div>
             <div class="row">
                 <table>
                     <form method="POST" action="{{ route('carrinho.cancelar') }}">
@@ -118,7 +118,7 @@
                                     <td colspan="2">
                                         <button type="submit" class="btn-large red col l12 s12 m12 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cancelar itens selecionados">
                                             Cancelar
-                                        </button>   
+                                        </button>
                                     </td>
                                     <td colspan="3"></td>
                                 </tr>
@@ -135,7 +135,7 @@
                     </h5>
                 @endforelse
             </div>
-            
+
         </div>
         </div>
             <form id="form-remover-produto" method="POST" action="{{ route('carrinho.remover') }}">
@@ -151,7 +151,7 @@
             </form>
         </div>
         </div>
-        <div class="footer mt-3">
+        <div class="footer">
             <div class="footer-social">
                 <a href="{{route('homePage')}}" target="_self" rel="alternate">
                     <img src="{{ asset('images/icons/masterer-icon.png') }}" alt="Masterer" >

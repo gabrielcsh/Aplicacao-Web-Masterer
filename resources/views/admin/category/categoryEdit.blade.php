@@ -37,7 +37,6 @@
                     </a>
                 </div>
                 <div class="header-search">
-                    <input type="text" id="search-product" name="search-product">
                 </div>
             </div>
         </div>
