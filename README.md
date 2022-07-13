@@ -1,11 +1,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/enzodpaiva/Masterer)
 # Masterer 
 
-Trabalho FACOM - Este projeto foi entregue como trabalho de duas disciplinas, sendo elas e seu integrantes:
-
-- Integrantes trabalho programação para web: Enzo Paiva, Arthur Ramires, Gabriel Cardoso e Nicole Fernanda.
-
-- Integrantes trabalho computação distribuida: Enzo Paiva, Arthur Ramires, Milena Alegre e Vitoria Rocha.
+Trabalho FACOM - Este projeto foi entregue como trabalho da disciplina de programação para web, sendo os integrantes: Enzo Paiva, Arthur Ramires, Gabriel Cardoso.
 
 ## Projeto feito com as tecnologias:
 - PHP 7.4 (FrameWork Laravel 8.83)
